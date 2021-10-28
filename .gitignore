@@ -1,0 +1,9 @@
+node_modules/
+composer.lock
+composer.phar
+vendor/
+src/ResqueBoard/cache/*
+
+*.DS_Store
+*Thumbs.db
+*~

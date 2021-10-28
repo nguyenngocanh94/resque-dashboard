@@ -1,0 +1,33 @@
+<div ng-controller="queueController">
+    <h2>Queues <span class="badge badge-info" ng-hide="queues.length==0">{{queues.length}}</span></h2>
+    <table class="table table-hover table-condensed table-greyed" ng-hide="queues.length==0">
+        <thead>
+            <tr>
+                <th class="name"><a href="" title="Sort by name" ng-click="predicate='name'; reverse=!reverse">Name</a></th>
+                <th><a href="" title="Sort by pending jobs count" ng-click="predicate='stats.pendingjobs'; reverse=!reverse">Pending jobs</a></th>
+                <th><a href="" title="Sort by total jobs count" ng-click="predicate='stats.totaljobs'; reverse=!reverse">Total jobs</a</th>
+                <th><a href="" title="Sort by workers count" ng-click="predicate='stats.workerscount'; reverse=!reverse">Workers</a</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="queue in queues | orderBy:predicate:reverse" ng-class="{inactive: queue.stats.workerscount == 0, warning: queue.stats.workerscount == 0 && queue.stats.pendingjobs > 0}">
+                <td class="name"><i class="fa fa-exclamation-triangle" ng-show="queue.stats.workerscount == 0 && queue.stats.pendingjobs > 0" tooltip-placement="left" tooltip-html-unsafe="This queue has <b>{{queue.stats.pendingjobs}} pending jobs</b>,<br/> but is not monitored by a worker"></i> {{queue.name}} </td>
+                <td>
+                    <a href="jobs/pending?queue={{queue.name|urlencode}}">{{queue.stats.pendingjobs|number}}</a>
+                </td>
+                <td>
+                    <a href="jobs/view?queue={{queue.name|urlencode}}">
+                        <div style="position:relative;">
+                            <span class="chart-bar" style="width:{{queue.stats.totaljobsperc}}%"></span>
+                            <b>{{queue.stats.totaljobs|number}}</b>
+                        </a>
+                    </div>
+                </td>
+                <td>{{queue.stats.workerscount}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <placeholder status="_init" error-code="_errorCode" error-message="_errorMessage" loading-content-name="list of queues" content-name="queues" icon="fa fa-align-left" init="init()"></placeholder>
+
+</div>

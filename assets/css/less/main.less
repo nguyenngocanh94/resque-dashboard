@@ -1,0 +1,2232 @@
+/*
+	ResqueBoard StyleSheet
+*/
+
+@import "mixins.less";
+@import "variables.less";
+@import "cal-heatmap.less";
+
+@baseColor : #33414c;
+
+// From Kuler
+
+@colorShadeMinusTwo: #668498;
+@colorShadeMinusOne: #90BBD8;
+@colorShadePlusOne: #3B4D59;
+@colorShadePlusTwo: #222C33;
+
+@colorCompMinusTwo: #758A98;
+@colorCompMinusOne: #567E98;
+@colorCompPlusOne: #7F7F48;
+@colorCompPlusTwo: #98985E;
+
+@insidePadding : @gridGutterWidth / 2;
+
+@bodyBackgroundColor : darken(@white, 5);
+
+@greyBorderColor: darken(@white, 13);
+
+
+@textColor : lighten(@baseColor, 5);
+@textColorLight : lighten(@baseColor, 50);
+
+@linkColor: @colorCompPlusTwo;
+@linkHoverColor: @colorCompPlusOne;
+
+.placeholder-color(@color) {
+	::-webkit-input-placeholder { /* WebKit browsers */
+	    color:    @color;
+	}
+	:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	    color:    @color;
+	}
+	::-moz-placeholder { /* Mozilla Firefox 19+ */
+	    color:    @color;
+	}
+	:-ms-input-placeholder { /* Internet Explorer 10+ */
+	    color:    @color;
+	}
+}
+
+@font-face {
+    font-family: "Fjalla One";
+    src: url("../font/FjallaOne-Regular.ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "PT Sans";
+    src: url("../font/PT_Sans-Web-Regular.ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "PT Sans";
+    src: url("../font/PT_Sans-Web-Bold.ttf");
+    font-weight: 700;
+}
+
+body
+{
+	padding-bottom: @gridGutterWidth ;
+	background-color: @colorShadePlusTwo;
+	font-family: 'PT Sans', sans-serif;
+	color: @textColor;
+}
+
+* {
+	// Do not use transition on height, due to bug on chrome when using bootstrap accordion
+	.transition(~"color,background-color,border,box-shadow,text-shadow,width" .2s);
+}
+
+a, a:visited {
+	color: @linkColor;
+	text-decoration: none;
+}
+
+a:hover, a:focus {
+	color: @linkHoverColor;
+	text-decoration: none;
+}
+
+a:focus {
+	outline: 1px dotted @baseColor;
+}
+
+h1, h2, h3, h4, h5 {
+	text-shadow: 0 1px 0 @white;
+
+	.badge, .label {
+		vertical-align: middle;
+		background-color: @colorShadeMinusOne;
+	}
+}
+
+h1
+{
+	font-size: 32px;
+	margin: 0;
+	line-height: 1;
+	color: darken(@textColor, 5);
+}
+
+h2{
+	font-size: 1.75em;
+	color: lighten(@textColor, 5);
+
+	.badge.pull-right, .label.pull-right {
+		margin-top: 0.8em;
+	}
+}
+
+// Buttons on the same level as H2
+.h2-btn {
+	margin-top: 0.5em;
+}
+
+h3{
+	font-size: 1.5em;
+	color: lighten(@textColor, 10);
+
+	.badge.pull-right, .label.pull-right {
+		margin-top: 0.5em;
+	}
+}
+
+.badge {
+	.border-radius(3px);
+	padding-left: @insidePadding/2;
+	padding-right: @insidePadding/2;
+}
+
+// Heading Subtitle
+.subtitle
+{
+	display: block;
+	line-height: 1;
+	font-size: 60%;
+}
+
+.page-header {
+	background-color: darken(@white, 2);
+	padding: @gridGutterWidth;
+	.box-shadow(0 1px 0 rgba(255,255,255,0.8));
+	border-bottom-color: @greyBorderColor;
+	margin-top: 0;
+	margin-bottom: 0;
+
+	i {
+		float: right;
+		color: lighten(@textColor, 60);
+	}
+}
+
+
+.alert-page {
+	border-radius: 0;
+	border-top: 0;
+}
+
+
+.btn-primary {
+	#gradient .vertical(@baseColor, darken(@baseColor, 5));
+	color: @colorShadeMinusOne;
+
+	&:hover, &:focus {
+		#gradient .vertical(darken(@baseColor, 5), darken(@baseColor, 10));
+		background-position: 0 0;
+	}
+}
+
+#main
+{
+	background-color: @baseColor;
+	border: 1px solid darken(@baseColor, 10);
+	position: relative;
+	margin: 0 auto;
+	width: 100%;
+	display: table;
+	flex: 1
+}
+
+.menu, #body, .sidebar {
+	display: table-cell;
+	vertical-align: top;
+}
+
+// To counter display:table that prevents margin to overflow the div
+// on the right side
+.row {
+	margin-right: @gridGutterWidth * -1;
+}
+
+#body {
+	background-color: @bodyBackgroundColor;
+	padding: 0;
+	border-top: 1px solid @white;
+	min-height: 400px;
+
+
+}
+
+.container {
+	width: @gridColumnWidth * 12 + @gridGutterWidth * 13;
+}
+
+.content-bloc {
+	margin: 0 @gridGutterWidth;
+	background: @white;
+	border: 1px solid @greyBorderColor;
+}
+
+.bloc {
+	margin: 0 @gridGutterWidth;
+}
+
+.ftr-bloc {
+	padding: 0 @gridGutterWidth;
+	background-color: @white;
+	border-top: 1px solid @greyBorderColor;
+	border-bottom: 1px solid @greyBorderColor;
+	box-shadow: 0 1px 0 darken(@white, 1);
+}
+
+.menu {
+
+	@color : @colorCompMinusTwo;
+	@width: @gridColumnWidth + @gridGutterWidth;
+
+	width: @width;
+	border-top: 1px solid lighten(@baseColor, 5);
+	border-bottom: 1px solid lighten(@baseColor, 5);
+	list-style: none;
+	margin: 0;
+
+
+
+	& > li > a {
+		display: block;
+		padding: 15px;
+		color: @color;
+		font-weight: bold;
+		text-transform: uppercase;
+		font-size: 12px;
+		text-align: center;
+
+		&.active {
+			background-color: darken(@baseColor, 5);
+			color: @colorShadeMinusOne;
+			.box-shadow(-5px 0 0 rgba(0,0,0,0.2));
+		}
+
+		&:hover, &:focus {
+			.box-shadow(-5px 0 0 @colorCompPlusOne);
+		}
+
+		&:active {
+			background-color: darken(@baseColor, 15);
+		}
+
+		i.fa {
+			font-weight: normal;
+			font-size: 2em;
+			display: block;
+		}
+
+		i.caret {
+			font-size: 12px;
+			position: absolute;
+			top: 25%;
+			right: 18px;
+			border: 0;
+			color: lighten(@baseColor, 8);
+		}
+
+	}
+
+
+
+	& > li {
+
+
+		&:first-child {
+			border-top: 0;
+		}
+
+		border-top: 1px solid lighten(@baseColor, 5);
+		border-bottom: 1px solid darken(@baseColor, 5);
+	}
+
+	ul {
+		margin: 0;
+		list-style: none;
+
+		a {
+			color: @color;
+			font-size: 0.85em;
+
+			i {
+				margin-right: 3px;
+			}
+		}
+
+
+	}
+
+	a {
+		color: @color;
+	}
+
+	a:hover, a:focus, & > .open > a {
+		color:  @colorCompPlusTwo;
+		background-color: darken(@baseColor, 10);
+	}
+
+
+	.dropdown-menu {
+		left: @width;
+		.border-radius(0);
+		background: @baseColor;
+		border: 0;
+		border-left: 5px solid darken(@baseColor, 10);
+		top: 10px;
+		.box-shadow(0 -1px 0 darken(@baseColor, 5));
+		border-top: 1px solid lighten(@baseColor, 5);
+
+		a:hover, a:focus {
+			color:  @colorCompPlusTwo;
+			background: darken(@baseColor, 10);
+		}
+
+		strong {
+			color: lighten(@color, 15);
+		}
+	}
+
+	.divider {
+		background: darken(@baseColor, 5);
+		border-bottom-color: lighten(@baseColor, 5);
+	}
+
+}
+
+// Error page
+#page-error {
+	background-color: @baseColor;
+	margin-bottom: 1em;
+	color: @colorCompMinusTwo;
+	font-size: 24px;
+
+	h1 {
+		color: lighten(@red, 25);
+		text-shadow: 0 -1px 0 rgba(0,0,0,.5);
+		margin-bottom: 0.5em;
+	}
+
+	@backgroundColor: @baseColor;
+
+	.btn {
+		margin-top: 1em;
+		#gradient .vertical(darken(@backgroundColor, 5), darken(@backgroundColor, 10));
+	}
+}
+
+.with-sidebar {
+	width: @gridColumnWidth * 8 + @gridGutterWidth * 9;
+}
+
+.full-width {
+	width: @gridColumnWidth * 11 + @gridGutterWidth * 12;
+}
+
+.sidebar {
+
+	@backgroundColor : @colorCompMinusOne;
+	@sidebarTextColor : lighten(@backgroundColor, 40);
+
+	width: @gridColumnWidth * 3 + @gridGutterWidth * 3;
+
+	background-color: @colorCompMinusOne;
+	margin-left: 0;
+	margin-right: 0;
+	padding: 0;
+	color: @sidebarTextColor;
+	.box-shadow(5px 0 0 darken(@backgroundColor, 5) inset);
+
+	h3 {
+		color: @white;
+		text-shadow: 0 -1px 0 #000;
+	}
+
+	h4 {
+		color: @baseColor;
+		text-shadow: 0 1px 0 rgba(255,255,255,0.3);
+	}
+
+	input[type=text] {
+		color: @baseColor;
+		font-weight: bold;
+
+		width: @gridColumnWidth * 3;
+		border-color: darken(@backgroundColor, 10);
+		background: lighten(@backgroundColor, 15);
+
+		//.box-shadow(0 1px 0 rgba(255,255,255,0.2), 0 1px 2px rgba(0,0,0,0.1) inset);
+	}
+
+	.placeholder-color(lighten(@baseColor, 15));
+
+	input[type=checkbox] {
+		margin-right: @insidePadding;
+	}
+
+	hr {
+		border-top: 2px solid @baseColor;
+		border-bottom: 1px solid lighten(@backgroundColor, 10);
+	}
+
+	legend {
+		font-size: 1.25em;
+		font-weight: bold;
+		line-height: 1;
+		color: lighten(@backgroundColor, 30);
+		border: 0;
+		padding: 0;
+	}
+
+	.unstyled {
+		border-bottom: 1px solid lighten(@backgroundColor, 5);
+		border-top: 1px solid darken(@backgroundColor, 5);
+
+		li {
+			border-bottom: 1px solid darken(@backgroundColor, 5);
+			border-top: 1px solid lighten(@backgroundColor, 5);
+			line-height: 1.6;
+			padding: 3px 5px;
+
+			&:hover, &:focus {
+				background: darken(@backgroundColor, 5);
+			}
+		}
+
+		.label.pull-right, .badge.pull-right {
+			margin-top: 3px;
+		}
+
+		.btn {
+			margin-left: @insidePadding;
+			color: @sidebarTextColor;
+			text-shadow: 0 -1px 0 rgba(0,0,0,0.5);
+		}
+	}
+
+	.btn {
+		#gradient .vertical(darken(@backgroundColor, 5), darken(@backgroundColor, 10));
+		color: @white;
+		border-color: darken(@backgroundColor, 15);
+	}
+
+	.page-header {
+		background-color: lighten(@backgroundColor, 3);
+		border-bottom-color: darken(@backgroundColor, 0);
+
+		h3 {
+			margin: 0;
+			line-height: 32px; // Same as h1
+		}
+
+		i {
+			color: darken(@backgroundColor, 1);
+			text-shadow: none;
+			font-size: 32px;
+		}
+	}
+
+	.stats {
+		li {
+			float: none;
+			padding: 0;
+			line-height: 1;
+
+			& > div, & > a {
+				color: @textColorLight;
+				padding: @gridGutterWidth/2 @gridGutterWidth;
+
+				strong {
+					color: lighten(@textColorLight, 10);
+					text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+				}
+
+				b {
+					color: lighten(@textColorLight, 5);
+				}
+			}
+
+			a:hover, a:focus {
+				.box-shadow(5px 0 0 @backgroundColor);
+				background-color: darken(@backgroundColor, 10);
+			}
+		}
+
+		.active {
+			background-color: darken(@backgroundColor, 5);
+			color: @colorShadeMinusOne;
+			.box-shadow(5px 0 0 rgba(0,0,0,0.2));
+		}
+	}
+
+	.discret-icon {
+		color: darken(@backgroundColor, 15);
+
+		&:hover, &:focus {
+			color: darken(@backgroundColor, 25);
+		}
+	}
+}
+
+a.brand
+{
+	font-size: 1em;
+	color: @colorCompMinusTwo;
+	text-shadow: 0 -1px 0 rgba(0,0,0, 0.5);
+
+	display : block;
+	float:  left;
+	padding: @gridGutterWidth 0;
+
+	em {
+		font-family: 'Fjalla One', sans-serif;
+		color: @colorShadeMinusOne;
+		font-size: 2.25em;
+		line-height: 1;
+		font-weight: normal;
+		font-style: normal;
+		display: block;
+		text-shadow: 0 -1px 0 rgba(0,0,0, 0.7);
+	}
+
+	&:hover em, &:focus em, &:hover, &:focus {
+		color: @white;
+	}
+}
+
+.page-header, .menu a.brand {
+	@padding: @gridGutterWidth * 0.75;
+	padding-top: @padding;
+	padding-bottom: @padding;
+}
+
+
+.page-alert {
+	position: absolute;
+	z-index: 200;
+	.makeColumn(11);
+	top: -22px;
+	.border-radius(0 0 3px 3px);
+}
+
+.alert {
+	background: lighten(@bodyBackgroundColor, 1);
+	border: 1px solid darken(@greyBorderColor, 5);
+	border-bottom: 2px solid darken(@greyBorderColor, 5);
+	.box-shadow(0 1px 1px rgba(255,255,255,0.8));
+	color: lighten(@textColor, 35);
+}
+
+.page-header + .alert {
+	margin-top: 1em;
+}
+
+.console {
+	background: @colorShadePlusOne;
+	padding: @insidePadding;
+	color: @textColorLight;
+	.border-radius(3px);
+
+	.error {
+		color: @yellow;
+	}
+}
+
+h4.sep
+{
+	background-color: @grayLighter;
+	padding: 5px;
+	.border-radius(3px);
+	clear:both;
+}
+
+#lastest-jobs
+{
+	height: 190px;
+	width: @gridColumnWidth * 10 + @gridGutterWidth * 13;
+}
+
+.chart rect
+{
+	fill: @colorCompPlusTwo;
+	.transition(all .1s);
+}
+
+.chart rect:hover , .chart rect:focus
+{
+	fill: @baseColor;
+	cursor: pointer;
+}
+
+.x-axis line, .x-axis path , .axis path
+{
+	stroke: #666;
+	fill: none;
+}
+
+.y-axis line, .y-axis path
+{
+	fill: none;
+	stroke: #666;
+}
+
+.y-axis
+{
+	margin-right: 2px;
+}
+
+.y-axis, .x-axis, .axis text
+{
+	shape-rendering: crispEdges;
+	font-size: 10px;
+	color: #666;
+}
+
+
+.axis-legend
+{
+	fill: #888;
+	font-size: 10px;
+}
+
+
+.workers-menu
+{
+	.head, .head + dd
+	{
+		border-top: 1px solid @gray;
+	}
+}
+
+
+.log-area
+{
+	@borderRadius : 3px;
+
+	background-color: @white;
+	list-style: none;
+	margin: 0 0 @gridGutterWidth;
+
+	border-top: 1px solid @greyBorderColor;
+	border-bottom: 2px solid @greyBorderColor;
+
+	.border-radius(@borderRadius);
+
+	.type
+	{
+		text-transform: uppercase;
+	}
+
+	.label
+	{
+		line-height: 1em;
+
+		padding: 3px 4px;
+		margin-top: 2px;
+
+		width: @gridColumnWidth - @insidePadding * 2;
+		float: left;
+		text-align: center;
+		text-transform: uppercase;
+		margin-right: @gridGutterWidth;
+		margin-left: @insidePadding;
+	}
+
+	.worker
+	{
+		color: @grayLight;
+		font-size: 0.85em;
+		font-style: normal;
+
+		width: @gridColumnWidth * 2 + @gridGutterWidth;
+		display: inline-block;
+		float: left;
+
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+
+		margin-right: @gridGutterWidth;
+		direction: rtl;
+		text-align: left;
+	}
+
+
+	li
+	{
+
+
+		border-bottom: 1px solid @grayLighter;
+		padding: 5px @insidePadding 5px 0;
+		.clearfix();
+
+
+		&:hover, &:focus
+		{
+			background-color: lighten(@yellow, 43);
+
+		}
+
+	}
+
+	.log-message {
+		float: left;
+		width: @gridColumnWidth * 4 + @gridGutterWidth * 3;
+
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+
+	.li-head, .li-head:hover
+	{
+		background: @greyBorderColor;
+		font-weight: bold;
+		color: @gray;
+
+		padding: 4px 2px 4px 10px;
+
+		border-top: 1px solid lighten(@greyBorderColor, 10);
+		border-bottom: 1px solid darken(@greyBorderColor, 5);
+	}
+
+	li[data-verbosity="debug"]
+	{
+		color: @grayLight;
+	}
+
+	.filter-event
+	{
+		background-color: lighten(@greyBorderColor, 10);
+		text-align: center;
+		font-size: 0.85em;
+		border-top: 1px solid @white;
+		border-bottom: 1px solid @greyBorderColor;
+		color: @grayLight;
+	}
+
+	li:first-child {
+		.border-radius(@borderRadius @borderRadius 0 0);
+	}
+
+	li:last-child {
+		.border-radius(0 0 @borderRadius @borderRadius);
+	}
+
+	time
+	{
+		font-size: 0.85em;
+		line-height: 1em;
+		color:  @grayLight;
+		float: right;
+
+		margin-top: 5px;
+
+	}
+}
+
+
+.worker-name
+{
+	width: @gridColumnWidth * 4 + @gridGutterWidth * 4;
+}
+
+
+footer.container p
+{
+	color: lighten(@textColor, 35);
+	font-size: 11px;
+	padding-top: 5px;
+}
+
+mark
+{
+	background-color: lighten(yellow, 25);
+	text-shadow: 0 1px 0 @white;
+}
+
+.light {
+	background-color: lighten(yellow, 40);
+}
+
+.job-status-icon
+{
+	display: block;
+	float: left;
+	margin-right: @insidePadding;
+}
+
+.job-details
+{
+	p {
+		text-align: left;
+	}
+
+	h4, code, pre
+	{
+		font-family: Consolas, "Courier New", Courier, mono;
+	}
+
+	h4
+	{
+		background-color: lighten(@green, 45);
+		display: inline-block;
+		margin: 0;
+		padding: 0;
+		font-size: 1.1em;
+	}
+
+	small
+	{
+		display:block;
+		color: lighten(@textColor, 25);
+	}
+
+	.job-status-icon {
+		margin-top: 8px;
+	}
+
+	.accordion-group {
+	  	border: 1px solid @greyBorderColor;
+	  	background: @white;
+	  	margin-bottom: 4px;
+
+	  	&.error, &.error:hover, &.error:focus
+		{
+
+			background-color: lighten(@red, 60);
+			border-color: lighten(@red, 50);
+			border-left: 4px solid @red;
+		}
+
+		&:hover, &:focus {
+			border: 1px solid darken(@greyBorderColor, 25);
+		}
+	}
+
+	.accordion-inner {
+		border-top: 0;
+	}
+
+	.accordion-body
+	{
+		pre
+		{
+			border: 0;
+			padding: 0;
+			font-size: 11px;
+			border-left: 4px solid @colorShadeMinusTwo;
+			white-space: pre-wrap;
+
+			code {
+				padding: @insidePadding;
+				background: @baseColor;
+				.border-radius(0 3px 3px 0);
+			}
+		}
+	}
+
+
+
+	time
+	{
+		float: right;
+		display: block;
+		clear: right;
+		margin-top: 2px;
+		font-weight: bold;
+		font-size: 11px;
+		opacity: 0.6;
+	}
+}
+
+
+.workers-list-item
+{
+	border: 1px solid @greyBorderColor;
+	border-bottom: 2px solid darken(@greyBorderColor, 5);
+	.border-radius(4px);
+	margin-bottom: @insidePadding;
+	background: @white;
+	padding: 0;
+
+	.badge {
+		position: relative;
+		top: -3px;
+		text-transform: uppercase;
+		padding-top: 3px;
+	}
+
+	&.paused {
+		background-color: @grayLighter;
+		border-color: darken(@greyBorderColor, 10);
+		.box-shadow(0 0 5px rgba(0,0,0,0.25) inset);
+
+		h3 {
+			border-bottom-color: darken(@grayLighter, 10);
+		}
+
+		.worker-stats {
+			background-color: darken(@grayLighter, 3);
+			border-color: darken(@grayLighter, 10);
+		}
+
+		.queue-name
+		{
+			.gradientBar(darken(@greyBorderColor, 15), darken(@greyBorderColor, 25));
+		}
+
+
+	}
+
+	.chart {
+		width: @gridColumnWidth;
+		height: @gridColumnWidth;
+		float: left;
+		margin-right: @gridGutterWidth;
+		text-align: center;
+	}
+
+	h3
+	{
+		font-size: 1.10em;
+		line-height: 1;
+		margin: 0 0 @insidePadding/2;
+		padding-bottom: @insidePadding/2;
+
+		border-bottom: 3px solid @grayLighter;
+
+	}
+
+
+	.worker-list-inner
+	{
+		padding: @insidePadding;
+		.clearfix();
+
+		small
+		{
+			b
+			{
+				font-size: 14px;
+				display: block;
+				margin-top: 6px;
+			}
+
+			color: lighten(@textColor, 20);
+			line-height: 12px;
+		}
+	}
+
+	.worker-list-inner-data {
+		float: left;
+		width: @gridColumnWidth * 4 + @gridGutterWidth * 2 - 2; // 2 is the border size
+
+		a:hover, a:focus {
+			background-color: lighten(@grayLighter, 3);
+			.box-shadow(0 5px 0 lighten(@colorCompMinusTwo, 25));
+			color: @linkColor;
+			text-shadow: 0 1px 0 @white;
+
+			b {
+				color: @linkColor;
+			}
+		}
+
+	}
+
+	.worker-list-footer {
+		border-top: 1px solid @greyBorderColor;
+		list-style: none;
+		background: lighten(@grayLighter, 3);
+		margin: 0;
+		.clearfix();
+
+		.box-shadow(0 1px 0 @white inset);
+
+		li {
+			color: darken(@greyBorderColor, 20);
+			font-size: 12px;
+			line-height: 1;
+			border-left: 1px solid @greyBorderColor;
+			display: block;
+			float: right;
+
+			&.text {
+				padding: @insidePadding;
+				display: block;
+			}
+		}
+
+		button {
+			color: lighten(@linkColor, 15);
+			padding: @insidePadding;
+			font-size: 12px;
+			line-height: 1;
+			border: 0;
+
+			background: lighten(@grayLighter, 5);
+
+			&:hover, &:focus {
+				background: @linkColor;
+				color: @white;
+			}
+
+			&[disabled=disabled], &[disabled=disabled]:hover, &[disabled=disabled]:focus {
+				color: lighten(@textColorLight, 15);
+				background-color: lighten(@grayLighter, 5);
+			}
+		}
+
+	}
+
+	.worker-stats
+	{
+		border: 1px solid @grayLighter;
+		margin-top: 5px;
+		.border-radius(3px);
+
+		a {
+			padding: @insidePadding;
+			display: block;
+		}
+
+
+		.stat-count
+		{
+
+			width: 50%;
+			float: left;
+			color: lighten(@textColor, 10);
+
+			b
+			{
+				font-size: 22px;
+				font-weight: bold;
+				display: block;
+				color: #000;
+
+				&.warning
+				{
+					color: lighten(@red, 25);
+				}
+			}
+		}
+	}
+}
+
+tr.worker-stats:target
+{
+	background-color: lighten(@yellow, 43);
+}
+
+tr.worker-stats:target td:first-child
+{
+	border-left: 3px solid @green;
+}
+
+.queue-name
+{
+	.gradientBar(lighten(@blue, 20), lighten(@blue, 2));
+	color: #fff;
+	font-weight: bold;
+	padding: 0px 4px 2px;
+	text-shadow: darken(@blue, 10) 0 -1px 0;
+	.border-radius(2px);
+	margin-right: 3px;
+}
+
+.table-greyed
+{
+	color: lighten(@textColor, 25);
+
+	td, th {
+		text-align: right;
+	}
+
+	a {
+		display: block;
+		padding: 0 5px;
+	}
+
+	.chart-bar {
+		background-color: lighten(@colorShadeMinusOne, 8);
+	}
+
+	a:hover, a:focus {
+
+		color: @colorShadePlusOne;
+	}
+
+
+	th {
+		background: transparent;
+		color: @textColor;
+		border-bottom: 2px solid darken(@greyBorderColor, 5);
+		text-shadow: 0 1px 0 @white;
+	}
+
+	.name {
+		font-weight: bold;
+		text-align: left;
+	}
+
+	&.table-hover tr:hover td {
+		background: darken(@bodyBackgroundColor, 3);
+	}
+
+	.inactive {
+		color: lighten(@textColor, 50);
+	}
+
+	tbody tr.warning > td, tbody tr.warning:hover > td {
+		background-color: lighten(@red, 30);
+		color: @white;
+
+		.chart-bar {
+			background-color: @red;
+		}
+
+		a, .chart-bar + b {
+			color: @white;
+			text-shadow: 0 1px 0 @red;
+		}
+	}
+
+}
+
+.table td.inner-wrap
+{
+	padding: 0!important;
+}
+
+.workers-table
+{
+
+	td
+	{
+		vertical-align:middle;
+		height: 37px;
+
+		.btn-group
+		{
+			visibility: hidden;
+		}
+
+		&:hover, &:focus
+		{
+			.btn-group
+			{
+				visibility: visible;
+			}
+		}
+
+
+
+		h4
+		{
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			margin: 0;
+			font-size: @baseFontSize;
+			padding: 0;
+			line-height: 1;
+		}
+	}
+	margin-bottom: @gridGutterWidth * 2.5;
+}
+
+.padd-fixer
+{
+	position: relative;
+	vertical-align: bottom;
+	padding: 8px;
+	height: 37px;
+}
+
+.chart-bar
+{
+	display: block;
+
+	height:  100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	background-color: lighten(@colorShadeMinusOne, 15);
+}
+
+table .chart-bar {
+	min-height: 20px;
+}
+
+span.chart-bar + b, span.chart-bar + a
+{
+	position: relative;
+	z-index: 1;
+	text-shadow: 0 1px 0 @white;
+}
+
+
+.chart-pie path:hover, .classyPieChart path:hover
+{
+	opacity: 0.8;
+}
+
+
+.breadcrumb
+{
+	background-color: @white;
+
+	form, form + div
+	{
+		float:left;
+		margin-left: 10px;
+		margin-bottom: 0;
+	}
+}
+
+.btn-discret
+{
+	border: 0;
+	background: none;
+	color: lighten(@textColor, 40);
+	.box-shadow(none);
+	text-shadow: none;
+}
+
+.btn {
+	#gradient .vertical(lighten(@greyBorderColor, 8), @greyBorderColor);
+	color: darken(@greyBorderColor, 40);
+}
+
+
+// Horizon chart
+.workers-table .graph
+{
+	top: 0;
+	left: 0;
+	margin: 0;
+	position: absolute;
+	z-index: 2;
+}
+
+.horizon
+{
+	border-bottom: 1px solid transparent;
+  	overflow: hidden;
+  	position: relative;
+}
+
+.horizon canvas
+{
+  	display: block;
+}
+
+.horizon .title,
+.horizon .value {
+  bottom: 0;
+  line-height: 30px;
+  margin: 0 6px;
+  position: absolute;
+  text-shadow: 0 1px 0 rgba(255,255,255,.5);
+  white-space: nowrap;
+}
+
+.horizon .title {
+  left: 0;
+}
+
+.horizon .value {
+  right: 0;
+}
+
+.line {
+  background: #000;
+  opacity: .2;
+  z-index: 2;
+}
+
+
+
+.table-condensed
+{
+	font-size: 13px;
+}
+
+
+.classyPieChart {
+  font: 10px sans-serif;
+  text-shadow: none;
+}
+.classyPieChart .pie-total{
+  font-size: 18px;
+  font-weight: bold;
+}
+.classyPieChart .pie-units{
+  fill: gray;
+  font-size: 12px;
+}
+.classyPieChart .pie-label{
+  fill: #CCC;
+  font-size: 14px;
+  font-weight: bold;
+}
+.classyPieChart .pie-value{
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.stats {
+
+	margin-bottom: 0;
+
+	li
+	{
+		color: @grayLight;
+		display:block;
+		float: left;
+
+		& > div, & > a
+		{
+			display:block;
+			padding: @gridGutterWidth;
+			color: @grayLight;
+		}
+
+		@hoverColor : @colorCompMinusTwo;
+
+		a:hover, a:focus {
+			background-color: rgba(255,255,255,.5);
+			.box-shadow(0 5px 0 lighten(@hoverColor, 25));
+		}
+
+		a:hover, a:hover strong, a:focus, a:focus strong {
+			color: @linkColor;
+		}
+
+		strong
+		{
+			color: @textColor;
+			font-size: 24px;
+			display: block;
+		}
+	}
+}
+
+.stats-number{
+	font-size:125%;
+	width:80px;
+	font-weight:bold;
+	text-align:right!important
+}
+
+.jobs-stats
+{
+
+	.separated {
+		border-right: 1px solid @greyBorderColor;
+	}
+
+	.separated:last-child
+	{
+		border-right: none;
+	}
+
+	li
+	{
+		color: @grayLight;
+		display:block;
+		float: left;
+
+		//background-color: lighten(@grayLighter, 5);
+
+		& > div
+		{
+			padding: 10px;
+		}
+
+
+		strong
+		{
+			color: @textColor;
+			font-size: 24px;
+			display: block;
+		}
+
+		&.total
+		{
+			font-size: 150%;
+			width: 100%;
+			clear: both;
+			float: none;
+			border-right: none;
+			border-bottom: 2px solid @greyBorderColor;
+			background-color: #fff;
+
+			strong
+			{
+				font-size: 24px * 1.5;
+				line-height: 1.25;
+			}
+
+			@errorcolor : darken(spin(#d8ecf7, 160), 15);
+
+			.chart-bar
+			{
+				width: 80%;
+				height: 10px;
+				position: relative;
+				margin: 10px 10px 10px 0;
+				float: left;
+				clear: left;
+
+				.chart-bar-in
+				{
+					background-color: @errorcolor;
+					position: absolute;
+					right: -10px;
+					display: block;
+					height: 100%;
+				}
+			}
+
+			small
+			{
+				font-size: 11px;
+				float: left;
+				color: @errorcolor;
+				font-weight: 800;
+				display: block;
+				margin-left: 10px;
+				line-height: 2.5;
+			}
+
+			.secondary, .secondary strong
+			{
+				color: lighten(@grayLight, 20);
+				text-align: right;
+			}
+		}
+
+
+	}
+}
+
+.popover {
+	color: lighten(@textColor, 10);
+	font-size: 13px;
+	line-height: 1.25em;
+	background-color: @bodyBackgroundColor;
+	.border-radius(4px);
+}
+
+.popover-title {
+	color: @baseColor!important;
+	font-weight: bold;
+	text-shadow: 0 1px 0 @white!important;
+
+	border-bottom-color: @greyBorderColor;
+	background-color: darken(@white, 2);
+	.box-shadow(0 1px 0 rgba(255,255,255,0.8));
+}
+
+.popover {
+ &.top .arrow {
+   &:after {
+      border-top-color: @bodyBackgroundColor;
+    }
+  }
+  &.right .arrow {
+
+    &:after {
+           border-right-color: @bodyBackgroundColor;
+    }
+  }
+  &.bottom .arrow {
+
+    &:after {
+      border-bottom-color: @bodyBackgroundColor;
+    }
+  }
+
+  &.left .arrow {
+    &:after {
+      border-left-color: @bodyBackgroundColor;
+
+    }
+  }
+
+}
+
+form label .fainfo-sign
+{
+	color: lighten(@blue, 30);
+	cursor: help;
+}
+
+
+
+
+.knight-unit
+{
+
+	padding: 50px;
+	text-align:center;
+	margin-top: @gridGutterWidth;
+	margin-bottom: @gridGutterWidth;
+	color: lighten(@textColor, 25);
+
+	h2
+	{
+		font-size: 32px;
+	}
+
+	p
+	{
+		font-size: 125%;
+
+		&:last-child{
+			margin-bottom: 0;
+		}
+
+	}
+
+	.icon
+	{
+		font-size: 80px;
+		line-height: 1;
+		margin-bottom: 30px;
+		display: block;
+	}
+
+	&.smaller {
+		text-shadow: 0 1px 0 @white;
+		padding: @gridGutterWidth;
+		background-color: darken(@bodyBackgroundColor, 3);
+		.border-radius(5px);
+
+		.icon {
+			font-size: 200%;
+			margin-bottom: 0.25em;
+		}
+	}
+
+	&.error {
+	background: lighten(@red, 55);
+		color: lighten(@red, 30);
+	}
+}
+
+/*
+	=======================
+	Jobs load distribution
+	=======================
+*/
+.jobs-matrix {
+	@cellsize: 22px;
+	margin: @gridGutterWidth 0;
+	padding: 0;
+
+	td {
+		border: 1px solid @grayLighter;
+		text-align: center;
+		height: @cellsize;
+		width: @cellsize;
+		vertical-align: middle;
+		font-size: 11px;
+	}
+
+	a {
+		display: block;
+		height: @cellsize;
+		width: @cellsize;
+
+
+		&:hover {
+			background: #000;
+		}
+	}
+
+	tr:first-child, tr:last-child {
+		background-color: lighten(steelblue, 48);
+	}
+
+	.new-week {
+		border-top: 2px solid #ddd;
+	}
+
+	.weekend {
+		background: lighten(#eee, 4);
+	}
+
+	.today .head-day, .today .daily-total {
+		background-color: lighten(#cedb9c, 23);
+	}
+
+	.head-day {
+		color: #999;
+		white-space: nowrap;
+		text-align: right;
+		font-size: 10px;
+		padding: 0 8px;
+		width: @cellsize * 3;
+
+		b {
+			font-size: 12px;
+		}
+	}
+
+	i {
+		display: none;
+	}
+
+	.head-weekday {
+		color: #999;
+		text-align: right;
+
+	}
+
+	.daily-total {
+		text-align: right;
+		font-size: 12px;
+
+		b {
+			z-index: 50;
+			position: relative;
+		}
+	}
+
+	b {
+		padding: 0 5px;
+		text-shadow: 0 1px 0 #fff;
+	}
+
+	.padd-fixer {
+		height: @cellsize;
+		padding: 0;
+		width: @cellsize * 7;
+	}
+
+	.chart-bar {
+		background-color: #e377c2;
+	}
+
+	// Percentage label for last column
+	.perc {
+		position: absolute;
+		padding: 2px;
+		font-size: 10px;
+		line-height: 10px;
+		font-weight: bold;
+		background-color: #fff;
+		.border-radius(2px);
+		left: 5px;
+		top: 4px;
+		visibility: hidden;
+		opacity: 0;
+	}
+
+	.daily-total:hover .perc {
+		visibility: visible;
+		opacity: 1;
+	}
+
+	.head-hour {
+		color: #999;
+	}
+
+
+	.day-quarter {
+		border-left-width: 2px;
+	}
+}
+
+th {
+	border-bottom: 2px solid darken(@greyBorderColor, 20);
+
+	a, a:visited {
+		color: darken(@colorShadeMinusOne, 15);
+	}
+}
+
+// Jobs matrix legend
+.table-legend{
+
+	width: 108px;
+	float: left;
+	margin-right: @insidePadding;
+
+	li {
+		display: block;
+		float: left;
+		width: 15px;
+		height: 15px;
+		margin-right: 3px;
+	}
+}
+
+#chart {
+
+	height: 350px;
+
+	.graph-legend
+	{
+		fill: @grayLight;
+		font-size: 11px;
+	}
+
+	.graph-line
+	{
+		fill: none;
+	  	stroke: steelblue;
+	  	stroke-width: 1.5px;
+	}
+
+	.graph-area
+	{
+		fill: steelblue;
+		opacity: 0.15;
+	}
+
+	#g-line-fail {
+		stroke: #8c564b;
+	}
+
+	#g-area-fail {
+		fill: #8c564b;
+		opacity: 0.5;
+	}
+
+	#g-line-scheduled {
+		stroke: #ff7f0e;
+	}
+
+	#g-area-scheduled {
+		fill: #ff7f0e;
+		opacity: 0.5;
+	}
+
+
+	#g-line-total-process-time {
+		stroke: #000;
+	}
+
+	#g-area-total-process-time {
+		fill: none;
+	}
+
+
+}
+
+#clip {
+	outline: 1px solid #000;
+}
+
+#chart .y-axis {
+
+	.tick {
+		stroke: #ddd;
+		stroke-dasharray: 4, 2;
+	}
+
+	path {
+		stroke: #aaa;
+
+	}
+
+	g:first-child {
+
+		display: none;
+	}
+
+	text {
+		background-color: #fff;
+	}
+
+	&.right .tick {
+		stroke: #aaa;
+		stroke-dasharray: 4, 2;
+	}
+
+
+}
+
+#chart .x-axis {
+
+	path {
+		display: none;
+	}
+
+	line {
+		stroke: lighten(#eee, 2);
+	}
+}
+
+#type-range {
+
+
+	padding: 0 @gridGutterWidth;
+	position: relative;
+
+	li > div {
+		padding: 0;
+		border-right:  1px solid @greyBorderColor;
+	}
+
+	li:last-child > div {
+		border-right: 0;
+	}
+
+	.static, a {
+		padding: 10px;
+	}
+
+	li {
+		width: 20%;
+	}
+
+	a {
+		display: block;
+
+		&:hover {
+			background-color: @white;
+			box-shadow: 0 -5px 0 @colorCompPlusOne;
+		}
+	}
+
+	.active {
+		background-color: lighten(@bodyBackgroundColor, 3);
+		box-shadow: 0 -5px 0 @colorCompPlusTwo;
+		outline: 0;
+		top: -5px;
+		position: relative;
+	}
+
+	i[class^="fa"], i[class*=" fa"] {
+	    margin-right: 0px;
+	    margin-top: 0px;
+	}
+}
+
+a i[class^="fa"], a i[class*=" fa"] {
+	cursor: pointer;
+}
+
+i[class^="fa"], i[class*=" fa"] {
+	cursor: default;
+}
+
+.dropdown-form .controls-row [class*="span"] + [class*="span"] {
+    margin-left: 10px;
+}
+
+.dropdown-form label {
+	color: lighten(@grayLight, 10);
+	font-weight: bold;
+	font-size: 11px;
+	line-height: 22px;
+}
+
+.dropdown-form .padded {
+	margin-top: 23px;
+}
+
+.dropdown-form .btn {
+	margin-left: 10px;
+}
+
+.dropdown-menu a small {
+	color: @grayLight;
+}
+
+.dropdown-menu a:hover small {
+	color: @grayLighter;
+}
+
+.dropdown-menu .btn-links  {
+
+	padding: 0 15px;
+
+	a {
+		clear: none!important;
+		margin-bottom: 8px;
+		padding: 4px 10px;
+	}
+}
+
+.dropdown-menu.styled {
+	#gradient .vertical(#fff, darken(#fff, 3));
+}
+
+.split-three li {
+	width: 33%;
+}
+
+.split-four li {
+	width: 25%;
+}
+
+
+.page-nav-tab {
+	margin-bottom: 0;
+	padding: 0 @gridGutterWidth;
+
+	& > li > a {
+		font-weight: bold;
+		border: 0;
+		.border-radius(0);
+		.box-shadow(0 2px 0 @greyBorderColor);
+	}
+
+	& > .active > a {
+		background-color: lighten(@bodyBackgroundColor, 3);
+		border: 0;
+		.box-shadow(0 5px 0 @colorShadeMinusOne);
+
+	}
+
+	& > li > a:hover, .dropdown.open > a, .dropdown.open > a:hover, .active > a:hover {
+		background-color: lighten(@bodyBackgroundColor, 4);
+		border: 0;
+		.box-shadow(0 3px 0 @colorShadeMinusTwo);
+	}
+
+	.open > .dropdown-toggle {
+		color: @colorShadePlusTwo;
+	}
+
+	& > li > a:active {
+		.box-shadow(0 5px 0 @colorShadePlusTwo);
+	}
+}
+
+.graph-browse-previous, .graph-browse-next
+{
+	padding: 5px;
+	border-radius: 3px;
+	line-height: 12px;
+	font-size: 12px;
+	text-decoration: none;
+}
+
+.graph-browse-previous:hover, .graph-browse-next:hover {
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.graph-browse-previous
+{
+	margin-right: 5px;
+}
+
+// HOME PAGE
+// Last activities graph
+#jobs-activities-graph {
+	background: darken(@greyBorderColor, 1);
+	min-height: 100px;
+	border-top: 1px solid darken(@greyBorderColor, 5);
+	border-bottom: 1px solid darken(@greyBorderColor, 5);
+	.box-shadow(0 1px 0 rgba(255,255,255,.5));
+}
+
+#scheduled-jobs-graph {
+	padding-left: 16px;
+	margin-bottom: 15px;
+}
+
+// HOME PAGE && JOB PAGE
+// Latest jobs activities heatmap
+.latest-jobs-graph {
+	padding: 10px;
+	background-color: @white;
+	border: 1px solid @greyBorderColor;
+	border-bottom: 4px solid darken(@greyBorderColor, 5);
+
+	.graph-browse-previous, .graph-browse-next {
+		background-color: @greyBorderColor;
+	}
+}
+
+// The jobs list under the heatmap
+.latest-jobs-list {
+	border: 1px solid darken(@greyBorderColor, 5);
+	background: darken(@bodyBackgroundColor, 5);
+	padding: 0 @insidePadding;
+	margin-bottom: @gridGutterWidth;
+	.border-radius(0 0 4px 4px);
+
+	p {
+		color: darken(@greyBorderColor, 30);
+		margin:0;
+		padding-top: @insidePadding;
+		text-align: center;
+	}
+
+	.accordion-group {
+		border-color: darken(@greyBorderColor, 8);
+	}
+
+	.list-sorter {
+		color: darken(@greyBorderColor, 25);
+		border-bottom-color: darken(@greyBorderColor, 5);
+		.box-shadow(0 1px 0 lighten(@greyBorderColor, 5));
+	}
+
+
+}
+
+// Placing the nav buttons
+#scheduled-jobs-graph, .latest-jobs-graph {
+	position: relative;
+}
+
+.domain-nav, .graph-browse-previous, .graph-browse-next {
+	position: relative;
+	font-size: 12px;
+	line-height: 1;
+}
+
+.graph-browse-previous, .graph-browse-next, .domain-nav a {
+	position: absolute;
+	right: 0;
+	#navButtons .arrowNav();
+}
+
+.graph-browse-previous, .graph-browse-next {
+	top: -@gridGutterWidth - (@baseFontSize * 1.75); // 1.75 is the h2 font size, buttons are placed beside h2
+}
+
+.graph-browse-previous, .domain-nav [rel=prev] {
+	right: 0px;
+	margin-right: 13 + @insidePadding;
+	.border-radius(3px 0 0 3px);
+}
+
+.graph-browse-next, .domain-nav [rel=next] {
+	.border-radius(0 3px 3px 0);
+}
+
+.ftr-bloc .domain-nav {
+	margin-top: @gridGutterWidth;
+}
+
+#navButtons {
+	.arrowNav() {
+		border: 0;
+		width: 10px;
+		text-align: center;
+		padding: @insidePadding/2 @insidePadding/2;
+		background: @grayLighter;
+
+		&, &:visited {
+			color: lighten(@textColor, 25);
+		}
+
+		&:hover {
+			background: lighten(@textColor, 25);
+			color: @white;
+		}
+
+		&:active {
+			background: @colorShadePlusOne;
+			color: @white;
+		}
+	}
+}
+
+.tooltip {
+	font-size: 12px;
+	font-weight: normal;
+
+	b {
+		color: yellow;
+		text-shadow: none;
+	}
+}
+
+.list-sorter {
+	list-style: none;
+	margin: 0 0 @gridGutterWidth;
+	padding: 0;
+	border-bottom: 2px solid @greyBorderColor;
+	color: darken(@greyBorderColor, 20);
+	font-size: 12px;
+	text-align: right;
+
+
+	li {
+		display: inline;
+		margin-left: @insidePadding / 2;
+		padding: 2px @insidePadding / 2;
+		position: relative;
+		top: 1px;
+
+	}
+
+
+	.active {
+		color: @colorShadeMinusTwo;
+		.box-shadow(0 3px 0 @colorShadeMinusOne);
+	}
+
+	a:hover {
+		.box-shadow(0 3px 0 @colorShadeMinusTwo);
+	}
+}
+
+
+#service-debugger {
+	position: absolute;
+	top:  0;
+	z-index: 999;
+	width: 100%;
+	margin: 0 auto;
+	padding-top: 10px;
+
+	background-color: rgba(242,242,242,.95);
+
+	code {
+		border:0;
+		background: none;
+	}
+
+	th:last-child {
+		width: 30%;
+	}
+
+	small {
+		display: block;
+		color:  lighten(@textColor, 25);
+	}
+
+	.debugger-content {
+		margin: @gridGutterWidth;
+		display: none;
+	}
+
+	&:hover .debugger-content {
+		display: block;
+	}
+
+	ul {
+		margin: 0;
+		display: none;
+	}
+
+	tr:hover ul {
+		display: block;
+	}
+
+	li {
+		margin-left: @gridGutterWidth;
+	}
+
+
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak
+{
+    display: none;
+}
+
+// Service status
+#server-status {
+	float: right;
+	margin-top: 1em;
+
+	@size: 11px;
+
+	.title {
+		text-transform: uppercase;
+		font-size: 10px;
+		font-weight: bold;
+		float: left;
+		margin-right: 7px;
+		text-shadow: 0 -1px 0 darken(#33414c, 10);
+	}
+
+	.status {
+		width: @size;
+		height: @size;
+		display: block;
+		background-color: @colorShadeMinusTwo;
+		float: left;
+		margin-right: 3px;
+		border-radius: @size;
+		border: 4px solid darken(#33414c, 10);
+
+		&:hover {
+			border-color: darken(#33414c, 20);
+		}
+	}
+
+	.status-ok {
+		background-color: @green;
+	}
+
+	.status-error {
+		background-color: lighten(@red, 15);
+	}
+}
+
+table .number {
+	text-align: right;
+}

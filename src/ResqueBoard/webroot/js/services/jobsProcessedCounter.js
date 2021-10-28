@@ -1,0 +1,1 @@
+angular.module("app").factory("jobsProcessedCounter",["$rootScope",function(a){var b=new SocketListener(a,"got");return b}]);

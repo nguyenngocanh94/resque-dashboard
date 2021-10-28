@@ -1,0 +1,1 @@
+var SocketListener=function(a,b){"use strict";var c=new WebSocket("ws://"+CUBE_URL+"/1.0/event/get"),d=[];c.onopen=function(){var a=new Date;c.send(JSON.stringify({expression:b,start:a.toISOString()}))};var e=function(){c.onmessage=function(){var b=arguments;a.$apply(function(){for(var a in d)d[a].apply(c,b)})}},f=function(a){d.push(a)};return{onmessage:function(a){f(a),e()}}};

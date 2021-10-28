@@ -1,0 +1,1 @@
+angular.module("app").factory("workersPauseListener",["$rootScope",function(a){"use strict";var b=new SocketListener(a,"pause");return b}]);

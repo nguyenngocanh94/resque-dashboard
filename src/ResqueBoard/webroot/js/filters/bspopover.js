@@ -1,0 +1,1 @@
+angular.module("app").filter("bs:popover",function(){"use strict";return function(a){a.popover()}});

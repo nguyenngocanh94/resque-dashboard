@@ -1,0 +1,34 @@
+{
+	"curly":	 true,
+	"eqeqeq":	 true,
+	"noarg":	 true,
+	"noempty":	 true,
+	"undef":	 true,
+	"unused": true,
+	"quotmark":	 "double",
+	"boss":	 true,
+	"regexdash":	 true,
+	"browser":	 true,
+	"devel":	 true,
+	"wsh":	 true,
+	"trailing":	 true,
+	"jquery":	 true,
+	"loopfunc":	 true,
+	"latedef": true,
+	"newcap": true,
+	"nonew": true,
+
+	"predef" : [
+		"require",
+		"hljs",
+		"d3",
+		"CUBE_URL",				// template header.ctp
+		"moment",
+		"cubism",
+		"CalHeatMap",
+		"angular",
+		"ANIMATION_DURATION",	// js/app.js
+		"formatISO",			// js/app.js
+		"SocketListener"		// js/services/socket.js
+	]
+}

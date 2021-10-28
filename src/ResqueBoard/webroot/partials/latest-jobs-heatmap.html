@@ -1,0 +1,21 @@
+<div ng-controller="lastestJobHeatmapController">
+    <h2>Latest jobs activities</h2>
+
+    <div class="latest-jobs-graph" id="latest-jobs-heatmap">
+        <i class="fa fa-chevron-left graph-browse-previous" rel="prev" data-event="tooltip" title="Previous"></i>
+        <i class="fa fa-chevron-right graph-browse-next" rel="next" data-event="tooltip" title="Next"></i>
+    </div>
+
+    <div class="latest-jobs-list">
+        <p ng-show="jobs.length==0 && date==false">Click on the graph to show the associated jobs</p>
+
+		<button ng-hide="jobs.length==0 && date==false" ng-click="clear()" type="button" class="close">×</button>
+        <h3 ng-hide="jobs.length==0 && date==false"><ng-pluralize count="jobs.length" when="{'0': 'No job', '1': '1 job', 'other': '{} jobs'}"></ng-pluralize> for <mark class="light">{{date}}</mark></h3>
+
+        <div ng-show="loading" class="alert alert-info">Loading datas ...</div>
+
+        <div ng-show="date!=false && jobs.length==0 && loading==false" class="alert">No job found for this period</div>
+
+        <ng-include src="'partials/jobs-list.html'"></ng-include>
+    </div>
+</div>

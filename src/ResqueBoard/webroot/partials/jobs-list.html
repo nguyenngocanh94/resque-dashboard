@@ -1,0 +1,41 @@
+<ul class="list-sorter" ng-hide="jobs.length==0">
+    <li>Sort by</li>
+    <li><a href="" ng-class="{active: predicate=='time'}" ng-click="predicate='time'; reverse=!reverse" title="Sort by date">Date</a></li>
+    <li><a href="" ng-class="{active: predicate=='status'}" ng-click="predicate='status'; reverse=!reverse" title="Sort by status">Status</a></li>
+    <li><a href="" ng-class="{active: predicate=='class'}" ng-click="predicate='class'; reverse=!reverse" title="Sort by job class">Job class</a></li>
+    <li><a href="" ng-class="{active: predicate=='queue'}" ng-click="predicate='queue'; reverse=!reverse" title="Sort by queue name">Queue</a></li>
+</ul>
+
+<ul class="unstyled job-details">
+    <li class="accordion-group" ng-repeat="job in jobs | orderBy:predicate:reverse" ng-class="{error: job.status==3}">
+        <div class="accordion-heading" data-toggle="collapse" data-target="#_{{job.job_id}}">
+            <div class="accordion-toggle">
+                <span class="job-status-icon">
+                    <fa fa-job status="job.status"></fa fa-job>
+                </span>
+
+                <span ng-show="job.worker" class="label label-info pull-right">{{job.worker}}</span>
+                <time ng-show="job.time" title="{{job.time}}" datetime="{{job.time}}"><i class="fa fa-time"></i> {{job.time|date:"HH:mm:ss"}}</time>
+
+                <h4>{{job.class}}</h4>
+
+                <small><code>#{{job.job_id}}</code> in
+                <span class="label">{{job.queue}}</span></small>
+
+            </div>
+        </div>
+        <div class="collapse accordion-body" id="_{{job.job_id}}">
+            <div class="accordion-inner">
+                <div ng-show="job.status==3">
+                    <div class="console"><span class="error">{{job.log}}</error></div>
+
+                    <h5>Error trace</h5>
+                    <pre class="job-trace"><code class="language-php">{{job.trace}}</code></pre>
+                </div>
+
+                <h5>Job arguments</h5>
+                <pre class="job-args"><code class="language-php">{{job.args}}</code></pre>
+            </div>
+        </div>
+    </li>
+</ul>

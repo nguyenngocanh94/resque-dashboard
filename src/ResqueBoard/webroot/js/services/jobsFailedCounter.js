@@ -1,0 +1,1 @@
+angular.module("app").factory("jobsFailedCounter",["$rootScope",function(a){var b=new SocketListener(a,"fail");return b}]);

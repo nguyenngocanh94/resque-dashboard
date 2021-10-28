@@ -1,0 +1,37 @@
+{
+	"name": "eric/resqueboard",
+	"description" : "ResqueBoard is an analytics software for PHP Resque. Monitor your workers health and job activities in realtime",
+	"keywords": ["php-resque", "resque", "web interface", "analytics", "realtime", "admin"],
+	"homepage": "http://kamisama.github.com/ResqueBoard/",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Wan Qi Chen",
+			"email": "kami@kamisama.me",
+			"homepage": "http://www.kamisama.me",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"php": ">=7.4.0",
+		"slim/slim" : "~2.3.0",
+		"kamisama/php-resque-ex": ">=1.2.1",
+		"kamisama/php-resque-ex-scheduler": ">=1.1.0",
+		"kamisama/resque-status": ">=0.0.1",
+		"doctrine/cache": "~1.0",
+		"ext-mongo": "*",
+		"ext-mongodb": "*",
+		"mongodb/mongodb": "^1.9"
+	},
+	"require-dev": {
+        "behat/mink": "*",
+        "behat/mink-goutte-driver": "*"
+    },
+	"autoload": {
+		"psr-0": {"ResqueBoard": "src/"}
+	},
+	"support": {
+		"issues": "https://github.com/kamisama/resqueboard/issues",
+		"source": "https://github.com/kamisama/resqueboard"
+	}
+}

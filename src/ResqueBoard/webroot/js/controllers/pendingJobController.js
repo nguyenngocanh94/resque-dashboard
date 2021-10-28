@@ -1,0 +1,1 @@
+angular.module("app").controller("pendingJobController",["$scope","$timeout","$http",function(a,b,c){"use strict";a.stats={total:0,queues:[]};var d=5e3,e=function(){c({method:"GET",url:"api/stats?fields=pending_full&queues="+Object.keys(a.stats.queues).join(",")}).success(function(b){a.stats=b.pending}).error(function(){}),b(e,d)};b(e,d)}]);
